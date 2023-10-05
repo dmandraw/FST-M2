@@ -1,0 +1,292 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.2">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
+      <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">false</boolProp>
+      <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+    </TestPlan>
+    <hashTree>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Activity 2: Load Testing an API with Authentication" enabled="true">
+        <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
+          <stringProp name="LoopController.loops">2</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+        <stringProp name="ThreadGroup.num_threads">5</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.delayedStart">false</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
+        <stringProp name="ThreadGroup.delay"></stringProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+A Thread Group defines a pool of users that will execute a particular test case against your server. In the Thread Group GUI, you can control the number of users simulated (number of threads), the ramp up time (how long it takes to start all the threads), the number of times to perform the test, and optionally, a start and stop time for the test.
+==========================================================================
+Number of Threads: 5 -I have configured 5 virtual users (threads) in the Thread Group.
+
+Ramp-up Period: 1 - The ramp-up period is set to 1 second. This means that JMeter will start all 5 threads within 1 second. As a result, each thread will start at 0, 0.2, 0.4, 0.6, and 0.8 seconds after the test begins, with all threads active by the end of the 1-second ramp-up period.
+
+Loop Count: 2 - Each thread will execute the test plan 2 times.
+
+Here&apos;s a timeline of how the execution will occur:
+
+    At time 0 seconds, Thread 1 starts.
+    At time 0.2 seconds, Thread 2 starts.
+    At time 0.4 seconds, Thread 3 starts.
+    At time 0.6 seconds, Thread 4 starts.
+    At time 0.8 seconds, Thread 5 starts.
+
+Now, the test is running with all 5 threads concurrently. Each of these 5 threads will execute the test plan according to the loop count, which is 2. This means that each thread will perform the test plan twice.
+
+So, the overall execution sequence for each thread will be:
+
+    Thread 1:
+        Execute the test plan (iteration 1)
+        Execute the test plan (iteration 2)
+
+    Thread 2:
+        Execute the test plan (iteration 1)
+        Execute the test plan (iteration 2)
+
+    Thread 3:
+        Execute the test plan (iteration 1)
+        Execute the test plan (iteration 2)
+
+    Thread 4:
+        Execute the test plan (iteration 1)
+        Execute the test plan (iteration 2)
+
+    Thread 5:
+        Execute the test plan (iteration 1)
+        Execute the test plan (iteration 2)
+
+This setup allows you to simulate 5 virtual users rapidly ramping up and each user performing two iterations of the test plan. The entire test will be completed when all threads have finished their respective iterations.</stringProp>
+      </ThreadGroup>
+      <hashTree>
+        <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+          <collectionProp name="HeaderManager.headers">
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.value">token 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</stringProp>
+              <stringProp name="Header.name">Authorization</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+The Header Manager lets you add or override HTTP request headers.
+
+JMeter now supports multiple Header Managers. The header entries are merged to form the list for the sampler. If an entry to be merged matches an existing header name, it replaces the previous entry. This allows one to set up a default set of headers, and apply adjustments to particular samplers. Note that an empty value for a header does not remove an existing header, it justs replace its value.
+
+____________________________________________________________________________________________________-
+Git authorization details are typically provided in the HTTP Header Manager in JMeter when you are testing Git repositories via HTTP or HTTPS. This is a common approach because Git repositories often use HTTP Basic Authentication or Token-based Authentication, and JMeter allows you to set custom HTTP request headers in the Header Manager.
+
+Here&apos;s why Git authorization details are provided in the HTTP Header Manager and where else you can provide them:
+
+ HTTP Header Manager: The HTTP Header Manager in JMeter is designed to allow you to add custom HTTP headers to your requests. For Git requests, you would typically set headers like Authorization to include your credentials or access token. This is a clean and organized way to provide authorization details, especially for scenarios that involve multiple requests.
+
+Alternatives:
+ HTTP Request Sampler: You can also provide authorization details directly in the HTTP Request Sampler. Some Git clients and servers support specifying credentials or tokens directly in the URL (e.g., https://username:password@github.com/user/repo). In this case, you could include the credentials in the URL of the HTTP Request Sampler.
+        HTTP Authorization Manager: JMeter has an HTTP Authorization Manager that can be used for managing authorization details, but it&apos;s typically used for HTTP Basic Authentication, not Git-specific authentication methods.
+        User-Defined Variables: You can store your authorization details as variables and use them in the HTTP Header Manager or directly in the request. However, it&apos;s essential to keep the variables secure, and you may need to take extra precautions to protect sensitive information.
+
+Keep in mind that the choice of where to provide Git authorization details in JMeter depends on the specific Git service you are testing and its authentication method. It&apos;s important to prioritize security and confidentiality when dealing with sensitive information like credentials or access tokens.
+
+</stringProp>
+        </HeaderManager>
+        <hashTree/>
+        <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+          <collectionProp name="Arguments.arguments">
+            <elementProp name="sshKey" elementType="Argument">
+              <stringProp name="Argument.name">sshKey</stringProp>
+              <stringProp name="Argument.value">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMWl2pAudK+SZLiIFwUivWMFTUZs0dV7Pn6+0urD8rmM</stringProp>
+              <stringProp name="Argument.metadata">=</stringProp>
+            </elementProp>
+          </collectionProp>
+          <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+The User Defined Variables element lets you define an initial set of variables, just as in the Test Plan.
+Note that all the UDV elements in a test plan - no matter where they are - are processed at the start.
+So you cannot reference variables which are defined as part of a test run, e.g. in a Post-Processor.
+
+UDVs should not be used with functions that generate different results each time they are called. Only the result of the first function call will be saved in the variable</stringProp>
+        </Arguments>
+        <hashTree/>
+        <ConfigTestElement guiclass="HttpDefaultsGui" testclass="ConfigTestElement" testname="HTTP Request Defaults" enabled="true">
+          <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+            <collectionProp name="Arguments.arguments"/>
+          </elementProp>
+          <stringProp name="HTTPSampler.domain">api.github.com</stringProp>
+          <stringProp name="HTTPSampler.protocol">https</stringProp>
+          <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+This element lets you set default values that your HTTP Request controllers use. For example, if you are creating a Test Plan with 25 HTTP Request controllers and all of the requests are being sent to the same server, you could add a single HTTP Request Defaults element with the &quot;Server Name or IP&quot; field filled in. Then, when you add the 25 HTTP Request controllers, leave the &quot;Server Name or IP&quot; field empty. The controllers will inherit this field value from the HTTP Request Defaults element.</stringProp>
+        </ConfigTestElement>
+        <hashTree/>
+        <CriticalSectionController guiclass="CriticalSectionControllerGui" testclass="CriticalSectionController" testname="Critical Section Controller" enabled="true">
+          <stringProp name="CriticalSectionController.lockName">global_lock</stringProp>
+          <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+The Critical Section Controller ensures that its children elements (samplers/controllers, etc.) will be executed by only one thread as a named lock will be taken before executing children of controller.</stringProp>
+        </CriticalSectionController>
+        <hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Git_POST" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">true</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments">
+              <collectionProp name="Arguments.arguments">
+                <elementProp name="" elementType="HTTPArgument">
+                  <boolProp name="HTTPArgument.always_encode">false</boolProp>
+                  <stringProp name="Argument.value">{&#xd;
+	&quot;title&quot;:&quot;TestKey&quot;,&#xd;
+	&quot;key&quot;:&quot;${sshKey}&quot;&#xd;
+}</stringProp>
+                  <stringProp name="Argument.metadata">=</stringProp>
+                </elementProp>
+              </collectionProp>
+            </elementProp>
+            <stringProp name="HTTPSampler.path">/user/keys</stringProp>
+            <stringProp name="HTTPSampler.method">POST</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+This sampler lets you send an HTTP/HTTPS request to a web server. It also lets you control whether or not JMeter parses HTML files for images and other embedded resources and sends HTTP requests to retrieve them. The following types of embedded resource are retrieved:
+
+    images
+    applets
+    stylesheets (CSS) and resources referenced from those files
+    external scripts
+    frames, iframes
+    background images (body, table, TD, TR)
+    background sound
+</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree>
+            <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="JSON Extractor" enabled="true">
+              <stringProp name="JSONPostProcessor.referenceNames">keyID</stringProp>
+              <stringProp name="JSONPostProcessor.jsonPathExprs">$[&apos;id&apos;]</stringProp>
+              <stringProp name="JSONPostProcessor.match_numbers"></stringProp>
+              <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+
+The JSON PostProcessor enables you extract data from JSON responses using JSON-PATH syntax. This post processor is very similar to Regular expression extractor. It must be placed as a child of HTTP Sampler or any other sampler that has responses.</stringProp>
+            </JSONPostProcessor>
+            <hashTree/>
+          </hashTree>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Git_GET" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.path">/user/keys/${keyID}</stringProp>
+            <stringProp name="HTTPSampler.method">GET</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+
+In JMeter, when you see an HTTP request with a path like /user/keys/${keyID}, it indicates that the request is using a variable (in this case, ${keyID}) as part of the path. Let&apos;s break it down:
+
+/user/keys/: 
+This is the static part of the URL path. It specifies a fixed part of the URL that remains the same in all requests.
+
+${keyID}:
+This is a variable placeholder. In JMeter, variables are used to parameterize your test. The value of this variable is likely to be replaced with an actual value during the test execution. The ${keyID} is a placeholder, and JMeter will replace it with the actual value you specify, which can come from various sources, such as CSV files, User Defined Variables, or other elements in your test plan.
+
+For example, if you have a CSV file with a list of keyID values, JMeter can replace ${keyID} with each value from the CSV file in each iteration of the test. This allows you to test different values of keyID as part of your HTTP request, simulating various scenarios or data inputs.
+
+So, when you see /user/keys/${keyID} in the path of an HTTP request in JMeter, it&apos;s a way to parameterize your requests and test different values for keyID without creating separate HTTP requests for each value manually.</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="GIT_Delete" enabled="true">
+            <boolProp name="HTTPSampler.postBodyRaw">false</boolProp>
+            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+              <collectionProp name="Arguments.arguments"/>
+            </elementProp>
+            <stringProp name="HTTPSampler.path">/user/keys/${keyID}</stringProp>
+            <stringProp name="HTTPSampler.method">DELETE</stringProp>
+            <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+            <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">false</boolProp>
+            <boolProp name="HTTPSampler.image_parser">false</boolProp>
+            <boolProp name="HTTPSampler.concurrentDwn">false</boolProp>
+            <stringProp name="HTTPSampler.concurrentPool">6</stringProp>
+            <boolProp name="HTTPSampler.md5">false</boolProp>
+            <intProp name="HTTPSampler.ipSourceType">0</intProp>
+            <stringProp name="TestPlan.comments">#Author:Deependra Singh Mandrawal
+Date:05-Oct-2023
+
+In JMeter, when you see an HTTP request with a path like /user/keys/${keyID}, it indicates that the request is using a variable (in this case, ${keyID}) as part of the path. Let&apos;s break it down:
+
+    /user/keys/: This is the static part of the URL path. It specifies a fixed part of the URL that remains the same in all requests.
+
+    ${keyID}: This is a variable placeholder. In JMeter, variables are used to parameterize your test. The value of this variable is likely to be replaced with an actual value during the test execution. The ${keyID} is a placeholder, and JMeter will replace it with the actual value you specify, which can come from various sources, such as CSV files, User Defined Variables, or other elements in your test plan.
+
+For example, if you have a CSV file with a list of keyID values, JMeter can replace ${keyID} with each value from the CSV file in each iteration of the test. This allows you to test different values of keyID as part of your HTTP request, simulating various scenarios or data inputs.
+
+So, when you see /user/keys/${keyID} in the path of an HTTP request in JMeter, it&apos;s a way to parameterize your requests and test different values for keyID without creating separate HTTP requests for each value manually.</stringProp>
+          </HTTPSamplerProxy>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
